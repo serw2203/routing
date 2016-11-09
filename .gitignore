@@ -1,8 +1,6 @@
 .idea/
-bower/*
-!bower/.keep
+bower_components/
 node_modules/
-dist/*
-!dist/.keep
-bower/
-dist/
+dest/*
+!dest/.keep
+!src/.keep

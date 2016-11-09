@@ -15,5 +15,6 @@
   ],
   "dependencies": {
     "superagent": "^2.3.0"
-  }
+  },
+  "devDependencies": {}
 }

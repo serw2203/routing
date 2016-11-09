@@ -8,6 +8,7 @@
 [6]: https://github.com/babel/babelify
 [7]: https://www.npmjs.com/package/vinyl-source-stream 
 [7.1]: https://github.com/gulpjs/vinyl
+[8]: https://www.npmjs.com/package/history
 
 ##Used
 - [npm][0] : package manager for JavaScript. Find, share, and reuse packages of code from hundreds of thousands of developers — and assemble them in powerful new ways 
@@ -26,7 +27,13 @@
 - [browserify][5] : will recursively analyze all the require() calls in your app in order to build a bundle you can serve up to the browser in a single &lt;script&gt; tag.
 - [babelify][6] : Browserify transform for Babel
 - [vinyl-source-stream][7] : conventional text streams at the start of your gulp or vinyl pipelines. See [vinil][7.1]
+- [history] : supports the HTML5 History/State APIs (pushState, replaceState, onPopState) in all browsers
 
+##Global install
+```
+npm install bower -g
+##Install tools
+```
 
 ##Install tools
 ```
