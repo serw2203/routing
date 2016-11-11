@@ -1,39 +1,56 @@
-import gulp         from "gulp";
-import gutil        from "gulp-util";
-import browserify   from "browserify";
-import source       from "vinyl-source-stream";
-import del          from "del";
+"use strict";
+import gulp from "gulp";
+import gulpUtil from "gulp-util";
+import gulpSass from "gulp-sass";
+import browserSync from "browser-sync";
+import browserify from "browserify";
+import source from "vinyl-source-stream";
+import del from "del";
 
 const paths = require('./config').paths;
-const src     = './' + paths.SRC + '/';
-const entry   = src + paths.ENTRY_POINT;
-const watches = [src + '**/*.js', src + '**/*.jsx'];
 
-gulp.task('build', () => {
+gulp.task('build',  () => {
     return browserify({
-        entries: entry,
+        entries: `./${paths.SRC}/${paths.ENTRY_POINT}`,
         extensions: ['.js', '.jsx'],
         debug: true,
-        cache: {},
-        packageCache: {},
-        fullPaths: true
+        paths: ['./node_modules/**/*','./bower_components/**/*']
     })
         .transform('babelify').bundle()
         .on('error', (e) => {
-            gutil.log(gutil.colors.red.bold('BROWSERIFY_ERROR'));
-            gutil.log(gutil.colors.green(e.message));
+            gulpUtil.log(gulpUtil.colors.red.bold('BROWSERIFY_ERROR'));
+            gulpUtil.log(gulpUtil.colors.green(e.message));
             this.emit('end');
         })
-        .pipe( source(paths.OUT) )
-        .pipe( gulp.dest(paths.DEST_BUILD) );
+        .pipe(source(paths.OUT))
+        .pipe(gulp.dest(paths.DEST_BUILD))
+        .pipe(browserSync.reload(
+            {stream: true}
+        ));
 });
 
-gulp.task('watch', ['build'], () => {
-    gulp.watch(watches, ['build']);
+gulp.task('sass', () => {
+    return gulp.src(`${paths.SRC}/sass/**/*.sass`)
+        .pipe(gulpSass())
+        .pipe(gulp.dest(`dest/css`));
+});
+
+gulp.task('browser-sync', () => {
+    browserSync.init({
+        server: {
+            baseDir: paths.DEST_BUILD
+        },
+        port: 8000,
+        notify: false
+    });
+});
+
+gulp.task('watch', ['build', 'browser-sync'], () => {
+    gulp.watch(`./${paths.SRC}/**/*.+(js|jsx|sass)`, ['build']);
 });
 
 gulp.task('clean', () => {
-    del([paths.DEST_BUILD + '/*', '!' + paths.DEST_BUILD + '/.keep'], false);
+    del([`${paths.DEST_BUILD}/*`, `!${paths.DEST_BUILD}/index.html`], false);
 });
 
 gulp.task('default', ['clean', 'build']);

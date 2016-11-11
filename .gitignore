@@ -2,5 +2,5 @@
 bower_components/
 node_modules/
 dest/*
-!dest/.keep
 !src/.keep
+!dest/index.html
