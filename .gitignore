@@ -4,3 +4,7 @@ node_modules/
 dest/*
 !src/.keep
 !dest/index.html
+.pioenvs
+.piolibdeps
+.clang_complete
+.gcc-flags.json

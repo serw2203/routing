@@ -1,22 +1,29 @@
 'use strict';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
+import paths from './config';
+import configureStore from './state';
+import Item from './components/Item';
 
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import {Router, Route, IndexRoute, browserHistory} from 'react-router'
+const store = configureStore({});
 
-import {IndexPage} from './components/pages/IndexPage';
-import {FirstPage} from './components/pages/FirstPage';
-import {SecondPage} from './components/pages/SecondPage';
+store.dispatch({type: 'INCREASE_COUNTER',});
 
-const paths = require('./../config').paths;
+store.dispatch({type: 'INCREASE_COUNTER',});
 
+store.dispatch({type: 'RESET_COUNTER',});
+
+store.dispatch({type: 'UNKNOWN',});
+
+store.dispatch({type: 'INCREASE_COUNTER',});
+
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 ReactDOM.render(
-    <Router history={browserHistory}>
-        <Route path="/" component={IndexPage}>
-            <IndexRoute component={FirstPage}/>
-            <Route path="first" component={FirstPage}/>
-            <Route path="second" component={SecondPage}/>
-        </Route>
-    </Router>,
-    document.getElementById(paths.APP_CONTAINER_ID)
-);
+    <Provider store={store}>
+        <Item/>
+    </Provider>
+    , document.getElementById(paths.APP_CONTAINER_ID));
+
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
